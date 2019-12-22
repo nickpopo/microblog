@@ -53,4 +53,18 @@
 	{{ super() }}
 	{{ moment.include_moment() }}
 	{{ moment.lang(g.locale) }}
+	<script>
+		function translate(sourceElem, destElem, destLang){
+			$(destElem).html('<img src="{{ url_for('static', filename='loading.gif') }}">');
+			$.post('/translate', {
+				text: $(sourceElem).text(),
+				dest_language: destLang
+			}).done(function(response){
+				var yandex = '<br><br><p><a href="http://translate.yandex.com/" target="_blank" style="color:black;">Powered by Yandex.Translate</a></p>'
+				$(destElem).html(`<span>${response['text']}</span>` + yandex);
+			}).fail(function(){
+				$(destElem).text("{{ _('Error: Could not contact server.') }}");
+			});
+		}
+	</script>
 {% endblock %}

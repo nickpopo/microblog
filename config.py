@@ -19,5 +19,7 @@ class Config(object):
 	MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 	ADMINS = ['your-email@example.com']
 
+	# Language Translation Api
+	YX_TRANSLATOR_KEY = os.environ.get('YX_TRANSLATOR_KEY')
 	# Frontside settings.
 	POSTS_PER_PAGE = 3
