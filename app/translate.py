@@ -1,8 +1,8 @@
 import json
 import requests
 import urllib.parse
+from flask import current_app
 from flask_babel import _
-from app import app
 
 
 def detect_language(text):
@@ -10,13 +10,13 @@ def detect_language(text):
 	if not len(text):
 		return ''
 
-	if 'YX_TRANSLATOR_KEY' not in app.config or \
-			not app.config['YX_TRANSLATOR_KEY']:
+	if 'YX_TRANSLATOR_KEY' not in current_app.config or \
+			not current_app.config['YX_TRANSLATOR_KEY']:
 		return _('Error: the translation service is not configured.')
 
 	# https://tech.yandex.com/translate/doc/dg/reference/detect-docpage/
 	params = {
-		'key': app.config['YX_TRANSLATOR_KEY'],
+		'key': current_app['YX_TRANSLATOR_KEY'],
 		'text': text
 	}
 	url = 'https://translate.yandex.net/api/v1.5/tr.json/detect?'
@@ -31,13 +31,13 @@ def translate(text, dest_language):
 	if not len(text):
 		return ''
 
-	if 'YX_TRANSLATOR_KEY' not in app.config or \
-			not app.config['YX_TRANSLATOR_KEY']:
+	if 'YX_TRANSLATOR_KEY' not in current_app or \
+			not current_app['YX_TRANSLATOR_KEY']:
 			return _('Error: the translation service is not configured.')
 	# Request Yandex Translate API.
 	# https://tech.yandex.com/translate/doc/dg/reference/translate-docpage/
 	params = {
-		'key': app.config['YX_TRANSLATOR_KEY'],
+		'key': current_app['YX_TRANSLATOR_KEY'],
 		'text': text,
 		'lang': dest_language
 	} 

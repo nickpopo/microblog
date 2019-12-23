@@ -35,6 +35,10 @@ nosetests.xml
 .project
 .pydevproject
 
+# System files
+.DS_Store
+
+.env
 venv
 app.db
 microblog.log*
